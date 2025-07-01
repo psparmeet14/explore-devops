@@ -185,3 +185,82 @@ CMD ["node", "server.js"]
 3. **Light-Weight & Isolated**  
    - Containers are more efficient and faster than traditional VMs  
    - Each container runs in complete isolation
+
+---
+
+## 🛠️ Steps to Create a Docker Image for a Project
+
+1. **Pre-requisite**: A valid `Dockerfile` must be present in the project root.
+2. Open terminal and navigate to the root folder of your project:  
+   `cd path/to/your/project`
+3. Build the image using:  
+   `docker build -t in28min/hello-world-python:0.0.2.RELEASE .`  
+   - `-t` or `--tag` assigns a name and optional tag in the format `name:tag`  
+   - `.` at the end includes all files in the build context
+
+4. General form:  
+   `docker build -t <image-name>:<tag> .`  
+   - Builds an image from the current directory containing the Dockerfile
+
+5. 🔍 **Remember**: Docker images are made up of **layers**
+   - Each Dockerfile instruction creates a new layer
+   - Layers are stacked and cached to improve build performance
+
+6. Check the created image using:  
+   `docker images`
+
+---
+
+## 🚀 Steps to Push Docker Image to Docker Hub
+
+1. Login to Docker Hub:  
+   `docker login`
+
+2. Build the image using your Docker Hub username/repo name:  
+   `docker build -t <your-docker-id>/<repo-name>:<tag> .`
+
+3. Push the image to Docker Hub:  
+   `docker push in28min/hello-world-python:0.0.2.RELEASE`
+
+---
+
+## 📦 Dockerfile Concept: ENTRYPOINT vs CMD
+
+- **CMD**  
+  - Default command to run when a container starts  
+  - Can be **overridden** at runtime using command-line arguments
+
+  Example:  
+  `docker run -d -p 5001:5000 in28min/hello-world-nodejs:0.0.3.RELEASE ping google.com`  
+  → CMD is overridden by `ping google.com`
+
+- **ENTRYPOINT**  
+  - Hard-coded executable that always runs unless explicitly overridden  
+  - Preferred when the container must always run the same app
+
+  Overriding ENTRYPOINT:  
+  `docker run -d -p 5000:5000 --entrypoint <entrypoint> in28min/hello-world-java:0.0.2.RELEASE`
+
+---
+
+## 🧪 Dockerize Your Own Application
+
+1. Write a `Dockerfile`
+2. Build the Docker image:  
+   `docker build -t your-app-name .`
+3. Run as a container:  
+   `docker run -d -p <host-port>:<container-port> your-app-name`
+
+---
+
+## ⚙️ Docker Architecture
+
+1. **Docker Client**  
+   - CLI tool that sends commands to the Docker daemon
+
+2. **Docker Daemon (Engine)**  
+   - Core service that:
+     - Manages containers and images
+     - Pulls images from registries
+     - Builds new images
+     - Pushes images to registries
