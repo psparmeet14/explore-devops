@@ -366,6 +366,82 @@ services:
 
 ---
 
+## 📄 Dockerfile for Node.js App (MongoDB + Mongo Express)
 
+This section shows how to create a `Dockerfile` for a simple JavaScript application that connects to MongoDB, typically paired with **Mongo Express** for easy DB visualization.
+
+> 🔁 In production, it's better to define environment variables in the `docker-compose.yml` file rather than directly in the Dockerfile.
+
+---
+
+### 🧪 Sample Dockerfile
+
+```Dockerfile
+FROM node:13-alpine
+
+# Define environment variables (move to docker-compose if possible)
+ENV MONGO_DB_USERNAME=admin \
+    MONGO_DB_PWD=password
+
+# Create application directory inside the container
+RUN mkdir -p /home/app
+
+# Copy app files from host to container's filesystem
+COPY ./app /home/app
+
+# Set the default command to run the app
+CMD ["node", "/home/app/server.js"]
+```
+## 🔍 Explanation of Key Instructions
+
+**FROM node:13-alpine**  
+- Uses a lightweight Node.js base image built on Alpine Linux  
+- Smaller image size → faster builds and deployments  
+
+---
+
+**ENV**  
+- Sets environment variables inside the image  
+- It's better to define sensitive values like DB credentials in `docker-compose.yml` instead  
+
+*Example for Compose:*  
+```yaml
+environment:
+  - MONGO_DB_USERNAME=admin
+  - MONGO_DB_PWD=password 
+```
+---
+
+**RUN mkdir -p /home/app**  
+- Creates a directory in the container’s filesystem to hold your application code  
+- `-p` ensures the entire path is created if it doesn’t exist  
+
+---
+
+**COPY ./app /home/app**  
+- Copies files from the host machine's `./app` directory into the container's `/home/app` directory  
+- The source path is relative to the `Dockerfile` location  
+
+---
+
+**CMD ["node", "/home/app/server.js"]**  
+- This is the container's default command  
+- Runs your application using Node.js  
+- Acts as the **entry point**, unless overridden by `docker run`  
+
+---
+
+## ✅ Best Practices
+
+- Prefer using **multi-stage builds** for production to reduce image size (e.g., separate build and runtime stages)  
+- Keep sensitive data like passwords and tokens **out of Dockerfiles**  
+- Use `.dockerignore` to exclude unnecessary files from the build context  
+- **Mount volumes** during local development instead of copying code into each image build  
+
+---
+
+📝 *This Dockerfile is often paired with a `docker-compose.yml` that runs MongoDB and Mongo Express alongside the Node.js app — all connected through a shared Docker network.*
+
+---
 
 📝 _These commands are part of the daily toolbox for anyone exploring Docker in DevOps. Bookmark or store them in your GitHub repo for quick access._
