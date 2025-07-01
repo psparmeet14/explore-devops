@@ -139,3 +139,49 @@ Includes:
 ---
 
 📝 *Docker simplifies both the development and deployment lifecycle, offering consistent, reproducible, and isolated environments across teams and platforms.*
+
+---
+
+## 📦 Dockerfile Example for Node.js Applications
+
+> What does a Node.js app need? It needs **Node** and **npm** installed.
+
+### Sample Dockerfile
+
+FROM node:19-alpine  
+- Ensures that Node.js and npm are available inside the container  
+- Alpine is a lightweight Linux distribution for smaller image size
+
+COPY package.json /app/  
+COPY src /app/  
+- Copies application files from host into the container
+
+WORKDIR /app  
+- Changes the working directory to `/app` inside the container
+
+RUN npm install  
+- Installs dependencies and creates `node_modules` inside the container
+
+CMD ["node", "server.js"]  
+- Starts the application  
+- This is the final command run when the container starts
+
+### What the Container Includes:
+1. Linux Operating System  
+2. Node.js and npm installed  
+3. Application files copied from host  
+4. Executed `npm install` to prepare the app environment
+
+---
+
+## 🌍 Docker Popularity
+
+1. **Standardized Application Packaging**  
+   - Same method for Java, Python, JS, etc.
+
+2. **Multi-Platform Support**  
+   - Works on local machines, data centers, and all major clouds (AWS, Azure, GCP)
+
+3. **Light-Weight & Isolated**  
+   - Containers are more efficient and faster than traditional VMs  
+   - Each container runs in complete isolation
