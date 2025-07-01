@@ -167,4 +167,87 @@ This document provides commonly used Docker commands for managing **images** and
 
 ---
 
+## 🚀 Launching Containers
+
+1. `docker run postgres`  
+   - `docker run` creates a new container. It doesn't reuse previous containers.
+
+2. `docker run redis`
+
+3. `docker run nginx:1.23`  
+   - Format: `docker run {name}:{tag}`  
+   - Creates a container from the given image and starts it
+
+4. `docker run -d nginx:1.23`  
+   - `-d` or `--detach` runs container in the background and prints container ID
+
+5. `docker run --name web-app -d -p 9000:80 nginx:1.23`  
+   - `--name` assigns a name to the container
+
+6. `docker run in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+   - Repository: `todo-rest-api-h2`  
+   - Tag: `1.0.0.RELEASE`  
+   - Downloads image from Docker registry and runs it
+
+7. `docker run -p 5000:5000 in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+   - `-p {HostPort}:{ContainerPort}`  
+     - Containers run in an internal bridge network  
+     - Need to expose container ports to host to access externally  
+     - Enables running multiple containers of the same app on different ports  
+     - Port binding makes services accessible on host machine  
+     - `-p` is short for `--publish`  
+     - Standard practice: use the same port on host and container  
+   - Open `localhost:5000` in browser to access app
+
+8. `docker run -p 5000:5000 -d in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+   - `-d` runs the container in the background  
+   - Keeps app running even if terminal is closed  
+   - Returns container ID
+
+9. `docker run -p 5001:5000 -d in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+   - Launches another container from the same image with a different host port
+
+10. `docker container run -p 5000:5000 -d in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+    - Alternative syntax using `docker container run`
+
+11. `docker run -p 5000:5000 -d --restart=always in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+    - Restart policy:  
+      - Default is `no`  
+      - `always` will auto-start container on Docker daemon restart  
+      - Useful for services like databases or production apps
+
+12. `docker run -p 5000:5000 -m 512m --cpu-quota=50000 -d in28min/todo-rest-api-h2:1.0.0.RELEASE`  
+    - `-m 512m` sets memory limit  
+    - `--cpu-quota=50000` (out of 100000) limits CPU usage to 50%  
+    - Used to control resource allocation
+
+13. `docker-compose up`  
+    - Launches multi-container applications as defined in a `docker-compose.yml` file
+
+---
+
+🗒️ **Note:**  
+- When you restart a container, all data/config inside it is lost  
+- Containers are **ephemeral**  
+- For **data persistence**, use **Docker Volumes**
+
+---
+
+## 📄 Viewing Container Logs
+
+1. `docker logs <container>`  
+   - View logs from the service running inside the container  
+   - Shows logs present at the time of execution
+
+2. `docker logs -f <container>`  
+   - `-f` means "follow"  
+   - Starts tailing the logs  
+   - Press `Ctrl + C` to stop following
+
+3. `docker logs <container> | tail`  
+   - View the last part of the logs  
+   - Useful for quick inspection of recent events
+
+---
+
 📝 _These commands are part of the daily toolbox for anyone exploring Docker in DevOps. Bookmark or store them in your GitHub repo for quick access._
