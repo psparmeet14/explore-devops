@@ -250,4 +250,58 @@ This document provides commonly used Docker commands for managing **images** and
 
 ---
 
+## 🖥️ Accessing the Container Terminal
+
+Use the following commands to open a terminal inside a running container. This is helpful for inspecting logs, config files, directories, environment variables, etc.
+
+### 1. Using Bash Shell
+
+`docker exec -it <container> /bin/bash`
+
+- `-it` enables interactive terminal mode  
+- You are now inside the container as the root user  
+- The container's virtual file system is accessible  
+  - `ls` — list files  
+  - `pwd` — print working directory  
+  - `cd /` — navigate to root  
+  - `env` — list environment variables  
+  - `exit` — leave the container shell
+
+### 2. Using sh Shell (alternative)
+
+`docker exec -it <container> /bin/sh`
+
+- Use when `/bin/bash` is not available in the container
+
+---
+
+## 🔐 SSH into MSSQL Docker Container
+
+### 1. Find the container ID
+
+`docker ps`
+
+### 2. Connect to the MSSQL container
+
+`docker exec -it <container_id> /bin/bash`
+
+### 3. Connect to MSSQL Server
+
+`/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <your_password>`
+
+### 4. Run SQL Queries
+
+- `USE YourDatabaseName;`  
+- `SELECT * FROM YourTableName;`  
+- `GO`
+
+### 5. Exit sqlcmd
+
+`QUIT`
+
+### 6. Exit the Docker container
+
+`exit`
+
+
 📝 _These commands are part of the daily toolbox for anyone exploring Docker in DevOps. Bookmark or store them in your GitHub repo for quick access._
