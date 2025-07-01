@@ -303,5 +303,69 @@ Use the following commands to open a terminal inside a running container. This i
 
 `exit`
 
+---
+
+## 🧩 Docker Compose
+
+Docker Compose is used to run and manage **multiple containers** as a single service. It simplifies orchestration by handling network creation, dependencies, and shared configurations.
+
+### ✅ Key Benefits
+
+- Used for running multi-container applications  
+- Automatically creates a **shared network** between the services  
+- You don’t need to manually set up a Docker network
+
+---
+
+### ▶️ Starting Services Using a Compose File
+
+`docker-compose -f mongo-docker-compose.yaml up`
+
+- `-f` specifies the file to use (default is `docker-compose.yml`)
+
+---
+
+### ⏹️ Stopping Services
+
+`docker-compose -f mongo-docker-compose.yaml down`
+
+- Shuts down all services defined in the file  
+- Also removes the containers, network, and volumes (if configured)
+
+---
+
+### 🧾 Sample `mongo-docker-compose.yaml`
+
+This example sets up a custom app along with MongoDB and Mongo Express for visualization.
+
+```yaml
+version: '3'
+services:
+  my-app:
+    image: 123123.dkr.ecr.eu-central-1.amazonaws.com/my-app:1.0
+    # Note: You need to run `docker login` on the dev server to access private ECR
+    ports:
+      - 3000:3000
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8080:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - # (Add more env vars as needed)
+```
+📝 Docker Compose makes it easier to spin up full environments for local development, staging, and testing with just one command.
+
+---
+
+
 
 📝 _These commands are part of the daily toolbox for anyone exploring Docker in DevOps. Bookmark or store them in your GitHub repo for quick access._
