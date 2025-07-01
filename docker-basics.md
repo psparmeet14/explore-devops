@@ -444,4 +444,71 @@ environment:
 
 ---
 
+## 🧰 Additional Docker Commands
+
+This section lists useful Docker commands for monitoring, cleaning, networking, and container linking.
+
+---
+
+### 🔍 Monitoring & System Info
+
+1. `docker events`  
+   - Stream real-time events from the Docker daemon
+
+2. `docker top <container>`  
+   - Shows the top processes running inside a specific container
+
+3. `docker stats <container>`  
+   - Displays real-time usage statistics (CPU, memory, network I/O, etc.) for the container
+
+4. `docker system df`  
+   - Summarizes disk usage by Docker (images, containers, volumes, and build cache)  
+   - Helps identify what’s taking up space
+
+5. `docker system events`  
+   - Displays system-wide events from the Docker daemon (like container start, stop, die)
+
+6. `docker system prune -a`  
+   - Removes:
+     - All stopped containers  
+     - All unused images (not referenced by any container)  
+     - All unused networks  
+     - All build cache  
+   - ⚠️ Use with caution — this is a cleanup command
+
+7. `docker system info`  
+   - Displays detailed information about the Docker installation (OS, drivers, resources, etc.)
+
+---
+
+### 🌐 Docker Networking
+
+8. `docker network ls`  
+   - Lists all Docker networks (bridge, host, none, and custom networks)
+
+9. `docker network inspect bridge`  
+   - Provides configuration and connected containers for the default `bridge` network
+
+10. `docker network create mongo-network`  
+    - Creates a custom Docker network  
+    - Useful for microservices that need to communicate with each other by name
+
+**Example (launching MongoDB on a custom network):**  
+`docker run -p 27017:27017 -d -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --name mongodb --net mongo-network mongo`
+
+---
+
+### 🔗 Linking Containers (Legacy Method)
+
+> ⚠️ `--link` is deprecated and **not recommended** for modern projects. Prefer using custom networks and DNS-based service discovery.
+
+11. Establishing links between microservices:
+
+- Using `--link`:  
+  `docker run -d -p 8100:8100 --name=currency-conversion --link currency-exchange in28min/currency-conversion:0.0.1-RELEASE`
+
+- Setting environment variable explicitly:  
+  `docker run -d -p 8100:8100 --env CURRENCY_EXCHANGE_SERVICE_HOST=http://currency-exchange --name=currency-conversion --link currency-exchange in28min/currency-conversion:0.0.1-RELEASE`
+---
+
 📝 _These commands are part of the daily toolbox for anyone exploring Docker in DevOps. Bookmark or store them in your GitHub repo for quick access._
