@@ -78,3 +78,108 @@ To check the autoscaler: `kubectl get hpa`
 ---
 
 > ✅ Keep experimenting with scaling, updating, and autoscaling to better understand how Kubernetes ensures high availability and fault tolerance.
+
+---
+
+# 🔧 Common Kubernetes (`kubectl`) Commands
+
+A quick reference guide to frequently used `kubectl` commands to inspect and manage resources in a Kubernetes cluster.
+
+---
+
+## 🔍 1. Check Client and Server Version
+
+- `kubectl version`
+
+Displays the version info for both the client and the Kubernetes server.
+
+---
+
+## 📅 2. View Cluster Events
+
+- `kubectl get events`
+- `kubectl get events --sort-by=.metadata.creationTimestamp`
+
+View events occurring in the cluster. Sorting helps to see the most recent events first.
+
+---
+
+## 🧪 3. Work with Pods
+
+- `kubectl get pods` — List all pods in the current namespace.
+- `kubectl get pods -o wide` — Show additional details like node and IP.
+- `kubectl get po` — Alias for `kubectl get pods`.
+- `kubectl describe pod <POD_NAME>` — Detailed info about a specific pod.
+- `kubectl explain pods` — Describes the API schema for pods.
+
+---
+
+## 📦 4. Manage ReplicaSets
+
+- `kubectl get replicaset`
+- `kubectl get replicasets`
+- `kubectl get rs` — Alias for replicaset.
+- `kubectl get replicaset -o wide` / `kubectl get rs -o wide` — Extended output.
+- `kubectl explain replicaset` — View detailed schema and fields.
+
+---
+
+## 🚀 5. View Deployments
+
+- `kubectl get deployment`
+
+Lists all deployments in the current namespace.
+
+---
+
+## 🌐 6. View Services
+
+- `kubectl get services`
+- `kubectl get svc` — Alias for services.
+- `kubectl get svc --watch` — Continuously watch service changes in real-time.
+
+---
+
+## 📋 7. View All Resources
+
+- `kubectl get all`
+
+Displays pods, services, deployments, ReplicaSets, and more in one command.
+
+---
+
+## 📈 8. View Horizontal Pod Autoscaler (HPA)
+
+- `kubectl get hpa`
+
+Check status of autoscalers created via `kubectl autoscale`.
+
+---
+
+## 📊 9. View Pod Resource Usage
+
+- `kubectl top pod`
+
+Shows CPU and memory usage of all pods. Requires `metrics-server` to be installed.
+
+---
+
+## 🖥️ 10. View Node Resource Usage
+
+- `kubectl top nodes`
+
+Displays CPU and memory usage per node. Requires `metrics-server`.
+
+---
+
+## ❌ 11. Delete Horizontal Pod Autoscaler
+
+- `kubectl delete hpa currency-exchange`
+
+Deletes a specific HPA resource named `currency-exchange`.
+
+---
+
+> 💡 Use `-o wide` to get more context. Use `--watch` to observe changes in real-time. Aliases like `po`, `rs`, and `svc` can speed up your workflow.
+
+---
