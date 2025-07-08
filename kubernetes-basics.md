@@ -308,4 +308,56 @@ More useful `kubectl` and `az` commands to manage deployments, logs, namespaces,
 
 ---
 
+# 🧾 ConfigMap and Deployment Rollout Commands
+
+Commands to create, inspect, and manage ConfigMaps, as well as track and rollback deployment versions.
+
+---
+
+## 🧰 ConfigMap Commands
+
+- `kubectl create configmap currency-conversion --from-literal=CURRENCY_EXCHANGE_URI=http://currency-exchange`  
+  Creates a ConfigMap named `currency-conversion` with a single key-value pair.
+
+- `kubectl get configmap`  
+  Lists all ConfigMaps in the current namespace.
+
+- `kubectl get configmap currency-conversion`  
+  View the ConfigMap's data in a summarized form.
+
+- `kubectl get configmap currency-conversion -o yaml`  
+  Outputs the ConfigMap in YAML format.
+
+- `kubectl get configmap currency-conversion -o yaml >> configmap.yaml`  
+  Saves the ConfigMap as a YAML file locally.
+
+---
+
+## 🔁 Deployment Rollout Commands
+
+- `kubectl rollout history deployment currency-conversion`  
+  Shows the revision history of a deployment.
+
+- `kubectl rollout undo deployment currency-exchange --to-revision=1`  
+  Rolls back the deployment to a specific revision (e.g., revision 1).
+
+---
+
+## 📦 What Gets Created?
+
+When running the following commands:
+
+- `kubectl create deployment ...`  
+  ✅ Creates:
+  - **Deployment**
+  - **ReplicaSet**
+  - **Pod**
+
+- `kubectl expose deployment ...`  
+  ✅ Creates:
+  - **Service**
+
+> 📘 These are the foundational building blocks for deploying and exposing applications in Kubernetes.
+
+---
 
