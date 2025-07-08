@@ -183,3 +183,129 @@ Deletes a specific HPA resource named `currency-exchange`.
 > 💡 Use `-o wide` to get more context. Use `--watch` to observe changes in real-time. Aliases like `po`, `rs`, and `svc` can speed up your workflow.
 
 ---
+
+# 🧰 Advanced Kubernetes Commands
+
+More useful `kubectl` and `az` commands to manage deployments, logs, namespaces, configs, and Azure AKS clusters.
+
+---
+
+## 📄 1. Export Resources as YAML
+
+- `kubectl get deployment currency-exchange -o yaml`  
+  View deployment definition in YAML format.
+
+- `kubectl get deployment currency-exchange -o yaml >> deployment.yaml`  
+  Save the deployment YAML to a file.
+
+- `kubectl get service currency-exchange -o yaml >> service.yaml`  
+  Save the service YAML definition to a file.
+
+---
+
+## 🔄 2. Apply and Compare YAML Files
+
+- `kubectl diff -f deployment.yaml`  
+  Shows differences between the live and desired state.
+
+- `kubectl apply -f deployment.yaml`  
+  Applies configuration changes to the cluster.  
+  > `apply` is used to manage resources using declarative config files.
+
+---
+
+## 🧹 3. Delete Resources by Label
+
+- `kubectl delete all -l app=currency-exchange`  
+  Deletes all resources with the label `app=currency-exchange`.
+
+---
+
+## 📜 4. View Pod Logs
+
+- `kubectl logs <POD_ID>`  
+  View logs of a specific pod.
+
+- `kubectl logs -f <POD_ID>`  
+  Stream (follow) the logs.
+
+- `kubectl logs <POD_ID> -n <NAMESPACE>`  
+  View logs from a pod in a specific namespace.
+
+---
+
+## 📦 5. Work With Namespaces
+
+- `kubectl get po -n workflow`  
+  List pods in the `workflow` namespace.
+
+- `kubectl get ns`  
+  List all namespaces in the cluster.
+
+- `kubectl get deployments -n <your-namespace>`  
+  View deployments within a specific namespace.
+
+---
+
+## 🧭 6. Manage Contexts
+
+- `kubectl config current-context`  
+  Get the current context name.
+
+- `kubectl config current-context master`  
+  Set context to `master`.
+
+- `kubectl config get-contexts`  
+  List all configured contexts in your kubeconfig file.
+
+- `kubectl config use-context <context_name>`  
+  Switch to a different context.
+
+---
+
+## ☁️ 7. Azure AKS Integration
+
+- `az login`  
+  Log in to your Azure account.
+
+- `az aks get-credentials --resource-group env_devtest-rg-cin-dev --name devtest-aks-cin-dev`  
+  Adds the AKS cluster context to your kubeconfig.  
+  > Merges the AKS context to `~/.kube/config`.
+
+- `az account set --subscription 12bea123-1234-4aff-12e1-a3123fd12eef1`  
+  Switches active subscription.
+
+---
+
+## 🔌 8. Port Forwarding
+
+- `kubectl port-forward <CONTAINER_ID> 9000 9001 -n workflow`  
+  Port forward local ports to a container in the `workflow` namespace.  
+  > Commonly used for accessing services (e.g., JMX) running inside pods.
+
+---
+
+## 🧮 9. Get Image Tag of a Deployment
+
+- `kubectl get deployment -o yaml -n workflow | findstr "image:"`  
+  Useful for checking which image/tag a tenant is running.
+
+---
+
+## ♻️ 10. Restart Pods by Selector
+
+- `kubectl delete pods --selector=app.kubernetes.io/name=monolith -n <namespace>`  
+  Deletes pods by label — they will be recreated by the ReplicaSet.
+
+---
+
+## ⚖️ 11. Scale Deployments
+
+- `kubectl scale deployment <deployment-name> --replicas=<desired-number-of-pods>`  
+  Scale up or down by modifying the number of replicas.
+
+> ✅ Tip: Scaling is instant; it's handled by updating the replica count in the underlying ReplicaSet.
+
+---
+
+
