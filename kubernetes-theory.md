@@ -1,1 +1,187 @@
+# 📚 Kubernetes Theory Notes
+
+---
+
+## 🚀 What is Kubernetes?
+
+- Open-source container orchestration tool.
+- Originally developed by Google.
+- Helps manage containerized applications across various environments:
+  - Physical machines
+  - Virtual Machines (VMs)
+  - Cloud environments
+  - Hybrid environments
+
+---
+
+## ⭐ Key Features
+
+- **High Availability**: No downtime.
+- **Scalability**: High performance at scale.
+- **Disaster Recovery**: Backup and restore mechanisms.
+
+---
+
+## 🏗️ Kubernetes Architecture
+
+A Kubernetes Cluster is composed of:
+
+### 1. Master Node
+- Runs critical Kubernetes processes:
+  - **API Server**: The entry point for K8s clients (CLI, UI, API).
+  - **Controller Manager**: Tracks cluster state and performs tasks like replication.
+  - **Scheduler**: Determines which node a new Pod should run on.
+- Runs multiple master processes but requires fewer resources.
+- It's essential to back up the master node — in production, usually two or more master nodes are maintained.
+
+### 2. Worker Nodes
+- Perform actual application workloads.
+- Each node runs:
+  - **Kubelet**: Primary node agent, allows cluster communication and task execution.
+- Each worker node hosts:
+  - Containers of different applications.
+  - Pods containing the applications.
+
+### 3. etcd
+- The backing store of Kubernetes.
+- Stores the **current state** and configuration of the cluster.
+- Facilitates backup and restore.
+
+### 4. Virtual Network
+- Enables communication between nodes (master and workers).
+- Unifies all nodes into a single, powerful machine aggregating all resources.
+
+> **Note:** A **Node** can be a virtual or physical machine.
+
+---
+
+## 🔍 Core Kubernetes Components
+
+### - **Kubelet**
+- Primary node agent that enables task execution on nodes.
+
+### - **API Server**
+- Acts as the cluster's front door for all administrative operations.
+
+### - **Controller Manager**
+- Monitors the state of the cluster.
+
+### - **Scheduler**
+- Responsible for pod placement based on workload and resource availability.
+
+### - **etcd**
+- Distributed key-value store containing cluster state and configurations.
+
+### - **Virtual Network**
+- Provides seamless communication within the cluster.
+
+---
+
+## 🧱 Basic Kubernetes Concepts
+
+### Node
+- A virtual or physical machine in the cluster.
+
+### Cluster
+- Group of nodes and a master node.
+- Cloud examples:
+  - AWS: EC2
+  - Azure: Virtual Machines
+  - Google Cloud: Compute Engine
+
+### Pod
+- **Smallest deployable unit** in Kubernetes.
+- An abstraction over containers.
+- Usually holds:
+  - 1 main application container.
+  - Optional helper/sidecar containers.
+- Properties:
+  - Each pod gets a unique IP.
+  - IP changes on re-creation.
+  - Ephemeral: Can terminate and recreate.
+  - Multiple containers in a pod share resources and communicate via `localhost`.
+  - Pods interact via **Services**.
+  - Pods are labeled for categorization.
+
+### Namespace
+- Provides isolation within the cluster (e.g., Dev vs QA environments).
+
+### Labels & Selectors
+- Used to associate Pods with ReplicaSets, Services, etc.
+
+### Annotations
+- Store metadata about Pods.
+
+### ReplicaSets
+- Ensures a specified number of pods are running.
+- Auto-scales up if pods are missing.
+- Tied to a specific release version.
+
+### Deployment
+- Blueprint/template for creating and managing Pods.
+- Preferred way to manage stateless applications.
+- Supports **Rolling Updates** for zero-downtime deployments.
+- For **stateful apps**, use **StatefulSet** instead of Deployment.
+
+### Services
+- Enable stable network interfaces for Pods:
+  - Permanent IP with DNS name.
+  - Lifecycle decoupled from Pods.
+  - Supports internal and external traffic.
+  - Acts as a **Load Balancer**.
+  - Always available interface to applications.
+
+### Ingress
+- Manages external access to the cluster.
+- Routes traffic to internal services.
+
+### ConfigMap
+- Stores **non-confidential** external configuration data.
+- Usage:
+  - As environment variables.
+  - As property files connected to Pods.
+
+### Secret
+- Stores sensitive data (credentials, passwords).
+- Stored in **Base64 encoded** format.
+- Usage similar to ConfigMaps but for confidential data.
+
+### Volumes (Data Storage)
+- Provides persistent storage for Pods.
+- Can be local or cloud-based.
+- Example: DB Pod data persistence across restarts.
+
+### StatefulSet
+- Manages stateful applications like databases.
+- Ensures proper replication and data consistency.
+- More complex than Deployments.
+
+### DaemonSet
+- Ensures that a copy of a Pod runs on **every node**.
+
+---
+
+## 🗒️ Kubernetes Configuration Files
+
+- Written in **YAML** format.
+- Stored alongside code or in a Git repository.
+- **3 main sections**:
+  
+### 1. `metadata`
+- Contains the resource's name and labels.
+
+### 2. `spec` (Specification)
+- Contains component-specific configurations.
+- Examples:
+  - Deployment: `replicas`, `selector`, `template`
+  - Service: `selector`, `ports`
+
+### 3. `status`
+- Auto-generated by Kubernetes.
+- Reflects the desired vs actual state.
+- Self-healing feature is driven by continuous state updates from **etcd**.
+
+---
+
+> ✅ This covers the foundational theory for understanding Kubernetes clusters, components, and configurations.
 
