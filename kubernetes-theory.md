@@ -185,3 +185,52 @@ A Kubernetes Cluster is composed of:
 
 > ✅ This covers the foundational theory for understanding Kubernetes clusters, components, and configurations.
 
+---
+
+## 📄 Example of Kubernetes Deployment Configuration (YAML)
+
+```yaml
+apiVersion: apps/v1           # Specifies the API version of the Kubernetes object
+kind: Deployment              # Declares that this resource is a Deployment
+metadata:
+  name: my-app                # Name of the deployment
+  labels:                     # Labels to categorize and identify the resource
+    app: my-app
+spec:
+  replicas: 2                 # Number of pod replicas to run (desired state)
+  selector:                   # Selector to match pods controlled by this deployment
+    matchLabels:
+      app: my-app
+  template:                   # Template for the pods created by this deployment
+    metadata:
+      labels:
+        app: my-app           # Labels applied to the pod
+    spec:
+      containers:             # List of containers to run in the pod
+        - name: my-app        # Name of the container
+          image: my-image     # Docker image to use for the container
+          env:                # Define environment variables inside the container
+            - name: SOME_ENV
+              value: $SOME_ENV  # Value is populated from the environment where the YAML is applied
+          ports:
+            - containerPort: 8080  # Exposes port 8080 inside the container
+```
+
+## 🗒️ Explanation of Key Sections:
+- apiVersion: Indicates which version of the Kubernetes API you are using to create the object.
+- kind: The type of Kubernetes object (e.g., Deployment, Service, Pod).
+- metadata:
+  - `name`: Unique identifier for the resource within the namespace.
+  - `labels`: Key-value pairs for organizing and selecting resources.
+- spec:
+  - `replicas`: Number of pod instances to maintain.
+  - `selector`: Matches pods based on their labels, ensuring the deployment manages the correct set of pods.
+  - `template`: Defines the pod specifications:
+      - metadata.labels: Pods must match these labels to be managed by the deployment.
+      - spec.containers:
+          - `name`: The container's name.
+          - `image`: Container image to deploy.
+          - `env`: Define environment variables for the application inside the container.
+          - `ports.containerPort`: The port on which the application runs inside the container.
+
+> ✅ **Tip**: The environment variable `$SOME_ENV` can be injected at deployment time by setting it in your CI/CD pipeline or via `kubectl` commands.
