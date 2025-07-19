@@ -277,3 +277,45 @@ spec:
 ### 🔗 Reference
 - [Kubernetes Official Documentation on Controllers](https://kubernetes.io/docs/concepts/architecture/controller/)
 
+---
+
+# ⚙️ Minikube & Kubectl Overview
+
+---
+
+## 🖥️ Minikube
+
+- **Purpose:** Local/Test Kubernetes Cluster Setup
+- **Type:** Open-source tool
+- **Functionality:**
+  - Sets up a **single-node Kubernetes cluster** on your local machine.
+  - Both **Master processes** and **Worker Node processes** run on the same machine.
+  - The node comes with **Docker pre-installed** to run containers.
+
+> ✅ **Primary Responsibility:**  
+Provide a lightweight, fully functional Kubernetes cluster for **local development, testing, and learning**.
+
+---
+
+## 🔧 Kubectl
+
+- **Purpose:** Command-line tool for interacting with Kubernetes clusters.
+- **Type:** CLI (Command Line Interface)
+- **Functionality:**
+  - Allows you to **create, inspect, manage, and delete Kubernetes resources** like Pods, Deployments, Services, etc.
+  - Communicates with the **API Server** of the Kubernetes cluster.
+
+Example usage:
+- `kubectl get pods` — List all pods.
+- `kubectl apply -f deployment.yaml` — Apply configuration from a YAML file.
+
+> ✅ **Primary Responsibility:**  
+Act as the **interface to interact and manage Kubernetes clusters** from your terminal or command prompt.
+
+---
+
+> ⚡ **Summary:**  
+Each concept serves a unique role:
+- **Minikube:** Sets up the Kubernetes cluster locally.
+- **Kubectl:** Manages and interacts with the Kubernetes cluster via commands.
+
