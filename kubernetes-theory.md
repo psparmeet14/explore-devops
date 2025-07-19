@@ -234,3 +234,46 @@ spec:
           - `ports.containerPort`: The port on which the application runs inside the container.
 
 > ✅ **Tip**: The environment variable `$SOME_ENV` can be injected at deployment time by setting it in your CI/CD pipeline or via `kubectl` commands.
+
+---
+
+# 🛠️ Kubernetes Configuration Principles
+
+---
+
+## ✅ 1. Declarative Configuration
+
+- Kubernetes follows a **declarative configuration model**.
+- Instead of specifying step-by-step instructions, you **declare the desired state** of the system using YAML or JSON files.
+- Example: You declare that there should be 3 replicas of a pod, Kubernetes ensures that 3 pods are running — **without you needing to specify how to create or manage them.**
+
+---
+
+## 🔄 2. "Is" == "Should Be"
+
+- The goal of Kubernetes is to maintain the state where:
+  
+  **Actual State (Is)** ➡️ **Desired State (Should Be)**
+
+- The desired state is defined in the configuration files (YAML/JSON).
+- Kubernetes continuously works to ensure that the **current state matches the desired state**.
+
+---
+
+## 📡 3. Controller Manager Checks: Desired State == Actual State
+
+- The **Controller Manager** is a core component of the Kubernetes Master Node.
+- Its responsibility is to:
+  - **Continuously monitor** the actual state of the cluster (from `etcd`).
+  - Compare it against the desired state defined in your configuration.
+  - If there's a mismatch (e.g., a pod crashes), the Controller Manager:
+    - Automatically takes corrective action to reconcile the states.
+    - Example: Restarting pods, rescheduling them, scaling up/down.
+
+> ✅ This is the essence of **self-healing** in Kubernetes.
+
+---
+
+### 🔗 Reference
+- [Kubernetes Official Documentation on Controllers](https://kubernetes.io/docs/concepts/architecture/controller/)
+
